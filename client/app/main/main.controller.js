@@ -14,4 +14,14 @@ angular.module('nashvivaDesktopApp')
       console.log('shenanigans')
     });
 
+    $http
+      .get('https://data.nashville.gov/resource/dqkw-tj5j.json?$$app_token=8efm64PGcgXye0PGdUl0S2zw3')
+      .then(function (data) {
+        console.log(data.data)
+      }, function (err) {
+        console.log(err)
+      })
+
   });
+
+
