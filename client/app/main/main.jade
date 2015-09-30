@@ -2,3 +2,4 @@ div(ng-include='"components/navbar/navbar.html"')
 
 .map-container(style="height: 100%;")
   ui-gmap-google-map(center='map.center' zoom='map.zoom' pan='map.pan')
+    ui-gmap-markers( models="markers" coords="'coords'" idKey="idKey" icon="options.icon" options="options")
