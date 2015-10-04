@@ -69,7 +69,7 @@ angular.module('nashvivaDesktopApp')
                 $scope.clicked.show = true;
                 console.log($scope.clicked)
                 if (!model) {
-                  $scope.map.center = this.coords;
+                  $scope.map.center = _.clone(this.coords);
                 }
               }
 
