@@ -1,5 +1,11 @@
 div(ng-include='"components/navbar/navbar.html"')
 
+.container-fluid
+  .row
+    .col-xs-12
+      ul
+        li Art
+        li Historical Markers
 .map-container(style="height: 100%;")
   ui-gmap-google-map(center='map.center' zoom='map.zoom' pan='map.pan')
     ui-gmap-markers( models="markers" coords="'coords'" icon="'options.icon'" options="options" click="onClick")
@@ -8,3 +14,9 @@ div(ng-include='"components/navbar/navbar.html"')
           h6 {{clicked.title}}
           p {{clicked.description}}
           p {{clicked.artist}}
+  .art-list()
+    .art-panel(ng-repeat="marker in markers" ng-click="marker.onClick()")
+      h5 {{marker.title}}
+      .description
+        p {{marker.description}}
+      h6 {{marker.artist}}

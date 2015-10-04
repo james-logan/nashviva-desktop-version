@@ -2,12 +2,8 @@
 
 angular.module('nashvivaDesktopApp')
   .controller('MainCtrl', function ($scope, $http, uiGmapGoogleMapApi) {
-    // $scope.awesomeThings = [];
-    var vm = this;
 
-    // $http.get('/api/things').success(function(awesomeThings) {
-    //   $scope.awesomeThings = awesomeThings;
-    // });
+    var vm = this;
 
     $scope.map = { center: {latitude: 36.16, longitude: -86.78}, zoom: 14, pan: false}
 
@@ -18,13 +14,11 @@ angular.module('nashvivaDesktopApp')
     $scope.preMarkers = [];
     $scope.markers = [];
 
-    // $scope.$watch($scope.active, function() {})
-
     $http
       .get('https://data.nashville.gov/resource/dqkw-tj5j.json?$$app_token=8efm64PGcgXye0PGdUl0S2zw3')
       .then(function (data) {
         var arr = []
-        console.log(data.data)
+        // console.log(data.data)
         data.data.forEach(function (art) {
           var marker = {
             idKey: null,
@@ -32,8 +26,6 @@ angular.module('nashvivaDesktopApp')
             title: art.artwork || art.title,
             description: art.description,
             artist: art.first_name + " " + art.last_name
-            // latitude: art.mapped_location.latitude,
-            // longitude: art.mapped_location.longitude
           }
 
           arr.push(marker);
@@ -44,13 +36,15 @@ angular.module('nashvivaDesktopApp')
         console.log(err)
       })
 
-      $scope.clicked = {};
+      $scope.clicked = {
+        show: false
+      };
 
       vm.secondDataSet = function (arr) {
         $http
           .get('https://data.nashville.gov/resource/eviu-nxp6.json?$$app_token=8efm64PGcgXye0PGdUl0S2zw3')
           .then(function (data) {
-            console.log(data.data)
+            // console.log(data.data)
             data.data.forEach(function (art) {
               var marker = {
                 coords: art.mapped_location,
@@ -61,7 +55,6 @@ angular.module('nashvivaDesktopApp')
               arr.push(marker)
             })
             arr = arr.map(function (art, i) {
-              // console.log(art)
               art.id = i;
               art.options = {
                 icon: 'assets/images/Modern Statue-26.png'
@@ -70,19 +63,18 @@ angular.module('nashvivaDesktopApp')
               art.isIconVisibleOnClick = true;
 
               art.onClick = function (marker, event, model) {
-                // console.log($scope.markers)
-                // console.log(marker)
-                console.log(model)
+                console.log($scope.clicked)
                 $scope.clicked.show = false;
-                $scope.clicked = model;
+                $scope.clicked = model || this;
                 $scope.clicked.show = true;
-                $scope.$apply();
+                console.log($scope.clicked)
+                if (!model) {
+                  $scope.map.center = this.coords;
+                }
               }
-              // console.log(art)
 
               return art
             })
-            console.log(arr)
             $scope.markers = arr;
           }, function (err) {
             console.log(err)
