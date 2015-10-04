@@ -15,17 +15,6 @@ angular.module('nashvivaDesktopApp')
       console.log('shenanigans')
     });
 
-    // {
-    //   idKey: 10000000,
-    //   icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Map_marker_font_awesome.svg/512px-Map_marker_font_awesome.svg.png',
-    //   options: {
-    //     icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Map_marker_font_awesome.svg/512px-Map_marker_font_awesome.svg.png'
-    //   },
-    //   coords: {
-    //     latitude: 36.16,
-    //     longitude: -86.78
-    //   }
-    // }
     $scope.preMarkers = [];
     $scope.markers = [];
 
@@ -35,14 +24,18 @@ angular.module('nashvivaDesktopApp')
       .get('https://data.nashville.gov/resource/dqkw-tj5j.json?$$app_token=8efm64PGcgXye0PGdUl0S2zw3')
       .then(function (data) {
         var arr = []
-        // console.log(data.data)
+        console.log(data.data)
         data.data.forEach(function (art) {
           var marker = {
             idKey: null,
-            coords: art.mapped_location
+            coords: art.mapped_location,
+            title: art.artwork || art.title,
+            description: art.description,
+            artist: art.first_name + " " + art.last_name
             // latitude: art.mapped_location.latitude,
             // longitude: art.mapped_location.longitude
           }
+
           arr.push(marker);
         })
         vm.secondDataSet(arr)
@@ -51,34 +44,46 @@ angular.module('nashvivaDesktopApp')
         console.log(err)
       })
 
+      $scope.clicked = {};
+
       vm.secondDataSet = function (arr) {
         $http
           .get('https://data.nashville.gov/resource/eviu-nxp6.json?$$app_token=8efm64PGcgXye0PGdUl0S2zw3')
           .then(function (data) {
-            // console.log(data.data)
+            console.log(data.data)
             data.data.forEach(function (art) {
               var marker = {
-                idKey: null,
-                coords: art.mapped_location
+                coords: art.mapped_location,
+                title: art.artwork,
+                description: art.description,
+                artist: art.first_name + " " + art.last_name
               }
               arr.push(marker)
             })
             arr = arr.map(function (art, i) {
-              art.idKey = i;
-              art.id = art.idKey;
-              art.icon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Map_marker_font_awesome.svg/512px-Map_marker_font_awesome.svg.png'
+              // console.log(art)
+              art.id = i;
               art.options = {
-                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Map_marker_font_awesome.svg/512px-Map_marker_font_awesome.svg.png'
+                icon: 'assets/images/Modern Statue-26.png'
               }
-              // if (art.coords) {
-              //   art.latitude = art.coords.latitude
-              //   art.longitude = art.coords.longitude
-              // }
+              art.show = false;
+              art.isIconVisibleOnClick = true;
+
+              art.onClick = function (marker, event, model) {
+                // console.log($scope.markers)
+                // console.log(marker)
+                console.log(model)
+                $scope.clicked.show = false;
+                $scope.clicked = model;
+                $scope.clicked.show = true;
+                $scope.$apply();
+              }
+              // console.log(art)
+
               return art
             })
+            console.log(arr)
             $scope.markers = arr;
-            console.log($scope.markers)
-            // console.log(arr)
           }, function (err) {
             console.log(err)
           })
