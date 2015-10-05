@@ -27,8 +27,8 @@ body {
   height: 500px;
   background-color: #f8f8f8;
   position: absolute;
-  top: 150px;
-  right: 40px;
+  top: 100px;
+  right: 10px;
   overflow-y: scroll;
   .art-panel {
     cursor: pointer;
@@ -37,6 +37,46 @@ body {
     .description {
       max-height: 30px;
       overflow: hidden;
+    }
+  }
+}
+
+.trail-builder {
+  width: 400px;
+  // height: 150px;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  position: absolute;
+  top: 520px;
+  left: 10px;
+  border: 1px solid darkgray;
+
+  .datasets {
+    padding: 5px;
+    border: 1px solid darkgray;
+    h4 {
+      margin: 0;
+    }
+  }
+  .trail {
+    width: 400px;
+    height: 64px;
+    box-shadow: inset 0 0 10px darkgray;
+    padding-top:0px;
+    padding-bottom: 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    .square-holder {
+      white-space: nowrap;
+      .square {
+        display: inline-block;
+        border: 1px solid darkgray;
+        background-color: #f8f8f8;
+        width: 62px;
+        height: 62px;
+      }
+
     }
   }
 }

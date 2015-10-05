@@ -1,22 +1,43 @@
 div(ng-include='"components/navbar/navbar.html"')
 
-.container-fluid
-  .row
-    .col-xs-12
-      ul
-        li Art
-        li Historical Markers
 .map-container(style="height: 100%;")
   ui-gmap-google-map(center='map.center' zoom='map.zoom' pan='map.pan')
     ui-gmap-markers( models="markers" coords="'coords'" icon="'options.icon'" options="options" click="onClick")
-      ui-gmap-window( coords="clicked.coords" show="clicked.show")
-        div
-          h6 {{clicked.title}}
-          p {{clicked.description}}
-          p {{clicked.artist}}
+    ui-gmap-window( coords="clicked.coords" show="clicked.show")
+      div
+        h6 {{clicked.title}}
+        p {{clicked.description}}
+        p {{clicked.artist}}
+        button.btn.btn-primary(ng-click="$parent.addToTrail()") Add to Trail
   .art-list()
     .art-panel(ng-repeat="marker in markers" ng-click="marker.onClick()")
       h5 {{marker.title}}
       .description
         p {{marker.description}}
       h6 {{marker.artist}}
+  .trail-builder
+    .datasets
+      h4 Marker Sets
+      form.form-inline
+        .checkbox
+          label
+            input(type='checkbox')
+            |  Art
+        .checkbox
+          label
+            input(type='checkbox')
+            |  Historical Markers
+      h4 Your Trail
+    .trail
+      h3(style="position: absolute; left: 10px; top: 70px; color: darkgray;") Waypoints Appear Here
+      .square-holder
+        .square(ng-repeat="spots in trail" style="overflow: hidden;")
+          p {{spots.title}}
+        //- .square
+        //- .square
+        //- .square
+        //- .square
+        //- .square
+        //- .square
+        //- .square
+

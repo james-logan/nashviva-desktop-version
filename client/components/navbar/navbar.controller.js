@@ -7,10 +7,10 @@ angular.module('nashvivaDesktopApp')
       'link': '/'
     }, {
       'title': 'Outdoors',
-      'link': '/'
+      'link': '/outdoors'
     }, {
       'title': 'Utilities',
-      'link': '/'
+      'link': '/utilities'
     }];
 
     $scope.isCollapsed = true;

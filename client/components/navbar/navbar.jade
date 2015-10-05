@@ -11,28 +11,9 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
 
     div#navbar-main.navbar-collapse.collapse(collapse='isCollapsed')
       ul.nav.navbar-nav
-        li.dropdown
-          a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Dropdown
-            span(class="caret")
-          ul.dropdown-menu
-            li
-              a(href="#") Action
-            li
-              a(href="#") Another action
-        li.dropdown(ng-repeat='item in menu' )
+        li(ng-repeat='item in menu' ng-class='{active: isActive(item.link)}')
           //- ng-class='{active: isActive(item.link)}'
-          a.dropdown-toggle(href='{{item.link}}' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") {{item.title}}
-            span.caret
-          ul.dropdown-menu
-            li
-              .checkbox
-                label Art
-                  input(type="checkbox")
-            li
-              .checkbox
-                label Historical Markers
-                  input(type="checkbox")
-
+          a(href='{{item.link}}' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") {{item.title}}
       ul.nav.navbar-nav.navbar-right
         li
           a(href="https://icons8.com") Icons

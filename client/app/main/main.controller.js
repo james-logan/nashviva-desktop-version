@@ -6,6 +6,13 @@ angular.module('nashvivaDesktopApp')
     var vm = this;
 
     $scope.map = { center: {latitude: 36.16, longitude: -86.78}, zoom: 14, pan: false}
+    $scope.trail = [];
+    $scope.cat = function () {};
+    $scope.addToTrail = function () {
+      console.log('WTF')
+      $scope.trail.push(_.clone($scope.clicked))
+      console.log($scope.trail)
+    };
 
     uiGmapGoogleMapApi.then(function (maps) {
       console.log('shenanigans')
@@ -40,6 +47,10 @@ angular.module('nashvivaDesktopApp')
         show: false
       };
 
+      $scope.addToTrail = function () {
+        $scope.trail.push(_.clone($scope.clicked))
+      };
+
       vm.secondDataSet = function (arr) {
         $http
           .get('https://data.nashville.gov/resource/eviu-nxp6.json?$$app_token=8efm64PGcgXye0PGdUl0S2zw3')
@@ -72,6 +83,11 @@ angular.module('nashvivaDesktopApp')
                   $scope.map.center = _.clone(this.coords);
                 }
               }
+              // art.addToTrail = function () {
+              //   console.log('WTF')
+              //   $scope.trail.push(_.clone($scope.clicked))
+              //   console.log($scope.trail)
+              // };
 
               return art
             })
